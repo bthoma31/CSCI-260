@@ -1,21 +1,19 @@
 package finalproject;
 
-import java.util.Scanner;
-
 /* Class BTNode */
 class BTNode {
     BTNode left, right;
-    int data;
+    String[] data;
 
     /* Constructor */
     public BTNode() {
         left = null;
         right = null;
-        data = 0;
+        data = new String[2]; // [0] = class name, [1] = time
     }
 
     /* Constructor */
-    public BTNode(int n) {
+    public BTNode(String[] n) {
         left = null;
         right = null;
         data = n;
@@ -42,12 +40,19 @@ class BTNode {
     }
 
     /* Function to set data to node */
-    public void setData(int d) {
+    public void setData(String[] d) {
         data = d;
     }
 
     /* Function to get data from node */
-    public int getData() {
+    public String getTime() {
+        return data[1];
+    }
+    public String getClassName() {
+        return data[0];
+    }
+    public String[] getData() {
         return data;
     }
+
 }
