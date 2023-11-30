@@ -11,7 +11,6 @@ public class project {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Fill out your schedule to continue");
         createSchedule();
-
     }
 
     // linked list that stores students you want to compare and then stores the
@@ -29,14 +28,27 @@ public class project {
             s1.add(st);
             System.out.println("How many classes does the student have?");
             int classNum = keyboard.nextInt();
-            Stack obj = new Stack<String[]>();
+
+            Stack tempSchedule = new Stack<String[]>(); //Creating stack to hold values temporarily
             for (int j = 0; j < classNum; j++) {
-                System.out.println("Enter name of the class");
+                System.out.println("Enter name of the class (type undo to undo the last class)");
                 keyboard.nextLine();
                 String className = keyboard.nextLine();
+                //If undo command is triggered, then the lat class is removed from the stack and the loop is continued (j is decremented to account for the removed class)
+                if (className.equalsIgnoreCase("undo") && tempSchedule.size() > 0) {
+                    tempSchedule.pop();
+                    j--;
+                    continue;
+                }
                 System.out.println("Enter time of the class as an integer(in terms of World time so 9pm would be 21)");
                 int time = keyboard.nextInt();
-                st.addToSchedule(className, time);
+                String[] keyValuePair = new String[] { className, Integer.toString(time) };
+                tempSchedule.push(keyValuePair);
+            }
+            //Adding from stack to Hashtable
+            for(int k = 0; k < tempSchedule.size(); k++) {
+                String[] pair = (String[]) tempSchedule.pop();
+                st.addToSchedule(pair[0], Integer.parseInt(pair[1]));
             }
             System.out.println(st.getSortedSchedule());
 
