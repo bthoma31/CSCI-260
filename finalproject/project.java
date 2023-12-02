@@ -67,8 +67,9 @@ public class project {
         // TESTING
         System.out.println("the binary tree: " + bt.countNodes());
         System.out.println();
-        bt.inorder();
-        System.out.println();
+        bt.postorder();
+        System.out.println("\n\n\n");
+        System.out.println(bt.calculateDifferences());
     }
 
     // method that prints out the linkedlist if the user wants too
