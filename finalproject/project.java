@@ -1,5 +1,7 @@
 package finalproject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -7,11 +9,11 @@ import java.util.Stack;
 
 public class project {
     public static BT bt = new BT(); // Binary tree to store the classes and times
+
     public static void main(String[] args) {
         System.out.println("Welcome to Bik & Noy's Schedule Comparer");
         Scanner keyboard = new Scanner(System.in);
-        System.out.println("Fill out your schedule to continue");
-        createSchedule();
+        getOptions();
     }
 
     // linked list that stores students you want to compare and then stores the
@@ -21,7 +23,7 @@ public class project {
         LinkedList<student> s1 = new LinkedList<>();
         System.out.println("How many people do you want to input?");
         int num = keyboard.nextInt();
-        keyboard.nextLine(); 
+        keyboard.nextLine();
 
         for (int i = 0; i < num; i++) {
             System.out.print("Enter name:");
@@ -30,24 +32,28 @@ public class project {
             s1.add(st);
             System.out.println("How many classes does the student have?");
             int classNum = keyboard.nextInt();
-            keyboard.nextLine(); 
+            keyboard.nextLine();
 
             int j = 0; // loop variable
             Stack<String[]> tempSchedule = new Stack<>(); // Creating stack to hold values temporarily
+            ArrayList<Integer> times = new ArrayList<Integer>();
             while (j < classNum) {
                 System.out.println("Enter name of the class (type undo to undo the last class)");
                 String className = keyboard.nextLine();
-                // If undo command is triggered, then the last class is removed from the stack and the loop is continued (j is decremented to account for the removed class)
+                // If undo command is triggered, then the last class is removed from the stack
+                // and the loop is continued (j is decremented to account for the removed class)
                 if (className.equalsIgnoreCase("undo") && !tempSchedule.isEmpty()) {
                     tempSchedule.pop();
                     System.out.println("Last class removed");
                     j--;
                     continue;
                 }
-                System.out.println("Enter time of the class as an integer (in terms of World time, so 9pm would be 21)");
+                System.out
+                        .println("Enter time of the class as an integer (in terms of World time, so 9pm would be 21)");
                 int time = keyboard.nextInt();
-                keyboard.nextLine(); 
-                String[] keyValuePair = new String[]{className, Integer.toString(time)};
+                keyboard.nextLine();
+                times.add(time);
+                String[] keyValuePair = new String[] { className, Integer.toString(time) };
                 tempSchedule.push(keyValuePair);
                 j++;
             }
@@ -62,7 +68,9 @@ public class project {
                     bt.insert(pair);
                 }
             }
+            getDifference(times);
             System.out.println(st.getSortedSchedule());
+
         }
         // TESTING
         System.out.println("the binary tree: " + bt.countNodes());
@@ -85,6 +93,48 @@ public class project {
     public static void getOptions() {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Choose an option:");
+        System.out.println("1. Create Scehdule");
+        System.out.println("2. Exit");
+        int option = keyboard.nextInt();
+        switch (option) {
+            case 1:
+                createSchedule();
+                break;
+            case 2:
+                System.out.println("Thank you for using NOY AND BIKS Schedule Comparer!");
+                System.out.println("Exting programm....");
+                System.exit(0);
+                ;
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public static void getDifference(ArrayList<Integer> times) {
+        int difference;
+        ArrayList<Integer> diff = new ArrayList<Integer>();
+        for (int i = 0; i < times.size() - 1; i++) {
+            difference = times.get(i + 1) - 1 - times.get(i) - 1;
+            diff.add(difference);
+            System.out.println("Your free time is:" + difference + "hours");
+
+        }
+        suggestActivity(diff);
+
+    }
+
+    public static void suggestActivity(ArrayList<Integer> diff) {
+        for (Integer diffs : diff) {
+            if (diffs < 1) {
+                System.out.println("You don't have free time. Stay in School!!");
+            } else if (diffs >= 1) {
+                System.out.println("You have more than an hour go get food or play basketball");
+            } else {
+                System.out.println("Just go home!");
+            }
+        }
 
     }
 

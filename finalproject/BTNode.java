@@ -48,9 +48,11 @@ class BTNode {
     public String getTime() {
         return data[1];
     }
+
     public String getClassName() {
         return data[0];
     }
+
     public String[] getData() {
         return data;
     }

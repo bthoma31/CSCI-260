@@ -58,7 +58,7 @@ class BT {
 
     /* Function to search for an element recursively */
     private boolean search(BTNode r, String val) {
-        if (r.getTime() == val) //Comparing and searching via time
+        if (r.getTime() == val) // Comparing and searching via time
             return true;
         if (r.getLeft() != null)
             if (search(r.getLeft(), val))
@@ -76,8 +76,9 @@ class BT {
         }
         return contains(root, data);
     }
+
     private boolean contains(BTNode r, String[] data) {
-        if (r.getClass().equals(data[0]) && r.getTime().equals(data[1])) //Comparing all attributes of data 
+        if (r.getClass().equals(data[0]) && r.getTime().equals(data[1])) // Comparing all attributes of data
             return true;
         if (r.getLeft() != null)
             if (contains(r.getLeft(), data))
